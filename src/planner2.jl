@@ -74,8 +74,8 @@ function search(pomcp::POMCPOWPlanner, tree::POMCPOWTree, info::Dict{Symbol,Any}
         s = rand(pomcp.solver.rng, tree.root_belief)
         if !POMDPs.isterminal(pomcp.problem, s)
             max_depth = min(pomcp.solver.max_depth, ceil(Int, log(pomcp.solver.eps)/log(discount(pomcp.problem))))
-            r_nouse,count_add=simulate(pomcp, POWTreeObsNode(tree, 1), s, max_depth)
-            i=i+count_add-1
+            simulate(pomcp, POWTreeObsNode(tree, 1), s, max_depth)
+            
             all_terminal = false
         end
         if CPUtime_us() - start_us >= pomcp.solver.max_time*1e6

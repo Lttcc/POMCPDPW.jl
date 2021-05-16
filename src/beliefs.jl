@@ -8,7 +8,7 @@ struct POWNodeBelief{S,A,O,P}
     POWNodeBelief{S,A,O,P}(m,a,o,d) where {S,A,O,P} = new(m,a,o,d)
     function POWNodeBelief{S, A, O, P}(m::P, s::S, a::A, sp::S, o::O, r) where {S, A, O, P}
         cv = CategoricalVector{Tuple{S,Float64}}((sp, convert(Float64, r)),
-                                                 1)
+                                                 1.0)
         new(m, a, o, cv)#initial
         
     end
@@ -31,7 +31,7 @@ belief_type(::Type{POWNodeFilter}, ::Type{P}) where {P<:POMDP} = POWNodeBelief{s
 init_node_sr_belief(::POWNodeFilter, p::POMDP, s, a, sp, o, r) = POWNodeBelief(p, s, a, sp, o, r)
 
 function push_weighted!(b::POWNodeBelief, ::POWNodeFilter, s, sp, r)
-    w = 1
+    w = 1.0
     insert!(b.dist, (sp, convert(Float64, r)), w)
 end
 """
